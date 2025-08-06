@@ -84,6 +84,11 @@ change_ip(){
 			"content": "'"$IP"'",
 			"proxied": '"$(jq .records.proxied cloudflare-ddns.json)"'
 		}'
+	
+	# keep changed IP in json file
+	ip_change=$(jq '.records.content = "'"$IP"'"' cloudflare-ddns.json)
+	echo ${ip_change} | jq '.' > cloudflare-ddns.json
+	echo -e "\n"
 }
 
 main(){
@@ -91,7 +96,6 @@ main(){
 	if [ ! -f ./cloudflare-ddns.json ]; then
 		setup
 		change_ip
-		echo -e "\n"
         echo -e '\e[4mAdd the following statement to your crontab:\e[24m'
 		echo -e "*/5 * * * * $(pwd)/cloudflare-ddns.sh >/dev/null 2>&1\n"
 
