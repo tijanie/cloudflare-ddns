@@ -49,7 +49,7 @@ setup(){
 
 	#select one domain with dynamic IP
 	echo ""
-	read -p 'Domain ('"0 - ${COUNT_A_RECORD}"'): ' SELECTION
+	read -p 'Domain ('"0 - ${COUNT_A_RECORD-1}"'): ' SELECTION
 
 	DOMAIN_RECORDS=$(echo "$result" | jq '.result | map(select(.type == "A")) | .['"${SELECTION}"']' \
 	| jq 'del(.proxiable)' | jq 'del(.settings)' | jq 'del(.meta)' | jq 'del(.comment)' \
@@ -93,7 +93,7 @@ main(){
 		change_ip
 		echo -e "\n"
         echo -e '\e[4mAdd the following statement to your crontab:\e[24m'
-		echo "*/5 * * * * $(pwd)/cloudflare-ddns.sh >/dev/null 2>&1"
+		echo -e "*/5 * * * * $(pwd)/cloudflare-ddns.sh >/dev/null 2>&1\n"
 
 	else
 		#if IP address changed
