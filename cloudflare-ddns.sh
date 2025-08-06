@@ -71,6 +71,7 @@ change_ip(){
 	DNS_RECORD_ID=$(jq .records.id cloudflare-ddns.json | tr -d '"')
 	IP=$(curl -sS ipv4.icanhazip.com)
 
+	echo ""
 	curl https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$DNS_RECORD_ID \
 	-X PATCH \
 	-H 'Content-Type: application/json' \
@@ -90,6 +91,10 @@ main(){
 	if [ ! -f ./cloudflare-ddns.json ]; then
 		setup
 		change_ip
+		echo -e "\n"
+        echo -e '\e[4mAdd the following statement to your crontab:\e[24m'
+		echo "*/5 * * * * $(pwd)/duck.sh >/dev/null 2>&1"
+
 	else
 		#if IP address changed
 		if [[ $(curl -sS ipv4.icanhazip.com) != $(jq .records.content cloudflare-ddns.json | tr -d '"') ]]; then
