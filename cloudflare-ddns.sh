@@ -93,7 +93,7 @@ main(){
 		change_ip
 		echo -e "\n"
         echo -e '\e[4mAdd the following statement to your crontab:\e[24m'
-		echo "*/5 * * * * $(pwd)/duck.sh >/dev/null 2>&1"
+		echo "*/5 * * * * $(pwd)/cloudflare-ddns.sh >/dev/null 2>&1"
 
 	else
 		#if IP address changed
