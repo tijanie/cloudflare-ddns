@@ -87,6 +87,8 @@ change_ip(){
 	
 	# keep changed IP in json file
 	ip_change=$(jq '.records.content = "'"$IP"'"' cloudflare-ddns.json)
+	#write to log
+	echo "$(jq .records.content cloudflare-ddns.json | tr -d '"') > ${IP} - $(date)" > cloudflare-ddns.log
 	echo ${ip_change} | jq '.' > cloudflare-ddns.json
 	echo -e "\n"
 }
