@@ -1,0 +1,3 @@
+- ✅: Single Dynamic Domain
+- ❌: Multipe Dynamic Domain
+- ❌: Discord Notification for IP Change
